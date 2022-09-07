@@ -2,6 +2,7 @@
 
 use League\Flysystem\Config;
 use League\Flysystem\File;
+use phpDocumentor\Reflection\Types\Void_;
 use League\Flysystem\FileNotFoundException;
 use League\Flysystem\Filesystem;
 use PHPUnit\Framework\TestCase;
@@ -11,7 +12,7 @@ class FileTests extends TestCase
     /** @var Filesystem */
     protected $filesystem;
 
-    public function setup()
+    public function setup(): void
     {
         clearstatcache();
         $fs = new VirtualFilesystemAdapter();
@@ -21,7 +22,7 @@ class FileTests extends TestCase
         $this->filesystem = new Filesystem($fs);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         try {
             $this->filesystem->delete('file.txt');
@@ -57,7 +58,7 @@ class FileTests extends TestCase
     public function can_obtain_a_read_stream_resource()
     {
         $file = $this->getFile();
-        $this->assertInternalType('resource', $file->readStream());
+        $this->assertIsResource($file->readStream());
     }
 
     /** @test */
